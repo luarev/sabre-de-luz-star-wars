@@ -16,22 +16,49 @@ void desligarSabre(const char* personagem, const char* cor, int corCodigo) {
     for (int i = 9; i >= 0; i--) {
         system("cls");
         for (int j = 0; j < i; j++) {
-            printf("           |\n");
+            printf("                |\n");
         }
         SetConsoleTextAttribute(hConsole, 7);
-        printf("           #\n");
-        printf("          ###\n");
-        Sleep(100);
+        printf("                |\n");
+        printf("                |\n");
+        printf("                |\n");
+        Sleep(80);
     }
 
     printf("\nSabre de %s desligado.\n", personagem);
     PlaySound(NULL, 0, 0);
 }
 
+void imprimirCabo(const char* tipoSabre, HANDLE hConsole, int corCodigo) {
+    if (strcmp(tipoSabre, "cruz") == 0) {
+        printf("             ");
+        SetConsoleTextAttribute(hConsole, corCodigo);
+        printf("===");
+        SetConsoleTextAttribute(hConsole, 7);
+        printf("|");
+        SetConsoleTextAttribute(hConsole, corCodigo);
+        printf("===\n");
+        SetConsoleTextAttribute(hConsole, 7);
+        printf("                |\n");
+        printf("                |\n");
+    } else if (strcmp(tipoSabre, "duplo") == 0) {
+        printf("                |\n                |\n                |\n");
+    } else if (strcmp(tipoSabre, "duplo_lateral") == 0) {
+        printf("            |       |\n            |       |\n            |       |\n");
+    } else {
+        printf("                |\n                |\n                |\n");
+    }
+}
+
 void ativarSabre(const char* personagem, const char* cor, int corCodigo, const char* lado, const char* tipoSabre) {
     system("cls");
-    printf("Ativando sabre de %s (%s)...\n", personagem, cor);
-    printf("Lado da Forca: %s\n\n", lado);
+    printf("+==========================================+\n");
+    printf("|        STAR WARS - SABRE DE LUZ          |\n");
+    printf("+==========================================+\n");
+    printf("| Personagem: %-30s|\n", personagem);
+    printf("| Cor: %-36s|\n", cor);
+    printf("| Lado da Forca: %-26s|\n", lado);
+    printf("+==========================================+\n\n");
     Sleep(500);
 
     PlaySound(TEXT("sabreOn.wav"), NULL, SND_FILENAME | SND_ASYNC);
@@ -39,62 +66,57 @@ void ativarSabre(const char* personagem, const char* cor, int corCodigo, const c
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, corCodigo);
 
+    int delay = 60;
     if (strcmp(tipoSabre, "curto") == 0) {
         for (int i = 0; i < 6; i++) {
-            printf("           |\n");
-            Sleep(100);
+            printf("                |\n");
+            Sleep(delay);
         }
         SetConsoleTextAttribute(hConsole, 7);
-        printf("           #\n");
-        printf("          ###\n");
+        imprimirCabo(tipoSabre, hConsole, corCodigo);
 
     } else if (strcmp(tipoSabre, "cruz") == 0) {
         for (int i = 0; i < 8; i++) {
-            printf("           |\n");
-            Sleep(80);
+            printf("                |\n");
+            Sleep(delay);
         }
-        printf("         --|--\n");
-        Sleep(80);
         SetConsoleTextAttribute(hConsole, 7);
-        printf("           #\n");
-        printf("          ###\n");
+        imprimirCabo(tipoSabre, hConsole, corCodigo);
 
     } else if (strcmp(tipoSabre, "duplo") == 0) {
         for (int i = 0; i < 10; i++) {
-            printf("           |\n");
-            Sleep(50);
+            printf("                |\n");
+            Sleep(delay);
         }
         SetConsoleTextAttribute(hConsole, 7);
-        printf("           #\n");
-        printf("          ###\n");
+        imprimirCabo(tipoSabre, hConsole, corCodigo);
         SetConsoleTextAttribute(hConsole, corCodigo);
         for (int i = 0; i < 10; i++) {
-            printf("           |\n");
-            Sleep(50);
+            printf("                |\n");
+            Sleep(delay);
         }
 
     } else if (strcmp(tipoSabre, "duplo_lateral") == 0) {
         for (int i = 0; i < 10; i++) {
-            printf("       |       |\n");
-            Sleep(100);
+            printf("            |       |\n");
+            Sleep(delay);
         }
         SetConsoleTextAttribute(hConsole, 7);
-        printf("       #       #\n");
-        printf("      ###     ###\n");
+        imprimirCabo(tipoSabre, hConsole, corCodigo);
 
     } else {
         for (int i = 0; i < 10; i++) {
-            printf("           |\n");
-            Sleep(100);
+            printf("                |\n");
+            Sleep(delay);
         }
         SetConsoleTextAttribute(hConsole, 7);
-        printf("           #\n");
-        printf("          ###\n");
+        imprimirCabo(tipoSabre, hConsole, corCodigo);
     }
 
     PlaySound(TEXT("sabreHum.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
     printf("\nSabre de %s ativado!\n", personagem);
+    getchar();
     desligarSabre(personagem, cor, corCodigo);
 }
 
